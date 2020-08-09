@@ -40,5 +40,3 @@ head(filteredOutcomes)
 filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,9,6,8,7)]
 
 head(filteredOutcomes)
-
-

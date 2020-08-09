@@ -37,7 +37,7 @@ filteredOutcomes$date_of_birth <- as.Date(as.character(filteredOutcomes$date_of_
 head(filteredOutcomes)
 
 #Reorganize the columns to move age and sex from the end
-filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,6,7,8)]
+filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,9,6,8,7)]
 
 head(filteredOutcomes)
 

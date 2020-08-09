@@ -1,17 +1,22 @@
-install.packages("ISLR")
 install.packages("caTools")
 install.packages("neuralnet")
 
 nodatesOutcomes <- subset(filteredOutcomes, select = c('animal_type','color', 'age','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 head(nodatesOutcomes)
+str(nodatesOutcomes)
 
-library(ISLR)
+nodatesOutcomes$sex_upon_outcome <- as.character(nodatesOutcomes$sex_upon_outcome)
+nodatesOutcomes$sex_upon_outcome <- as.factor(nodatesOutcomes$sex_upon_outcome)
+
+levels(nodatesOutcomes$sex_upon_outcome)
+
 maxs <- apply(nodatesOutcomes[,1:4], 2, max)
 mins <- apply(nodatesOutcomes[,1:4], 2, min)
 scaled.data <- as.data.frame(scale(nodatesOutcomes[,1:4], center = mins,
                                    scale = maxs - mins))
 print(head(scaled.data, 2))
 Adopted = as.numeric(nodatesOutcomes$outcome_type)-1
+Adopted
 data = cbind(Adopted, scaled.data)
 
 library(caTools)

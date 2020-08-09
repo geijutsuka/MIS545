@@ -2,27 +2,31 @@ install.packages("C50")
 install.packages("tidyverse")
 library(C50)
 library(tidyverse)
-head(narrowedOutcomes)
-nodateOutcomes <- subset(narrowedOutcomes, select = c('animal_type','breed','color', 'age','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
+head(filteredOutcomes)
+nodatesOutcomes <- subset(filteredOutcomes, select = c('animal_type','breed','color', 'age','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
+head(nodatesOutcomes)
 
-nodateOutcomes$animal_type <- as.factor(nodateOutcomes$animal_type)
-nodateOutcomes$breed <- as.factor(nodateOutcomes$breed)
-nodateOutcomes$color <- as.factor(nodateOutcomes$color)
-nodateOutcomes$age <- as.factor(nodateOutcomes$age)
-nodateOutcomes$sex_upon_outcome <- as.factor(nodateOutcomes$sex_upon_outcome)
-nodateOutcomes$outcome_type <- as.factor(nodateOutcomes$outcome_type)
-nrow(nodateOutcomes)
-head(nodateOutcomes)
+nodatesOutcomes$sex_upon_outcome <- as.character(nodatesOutcomes$sex_upon_outcome)
 
-summary(nodateOutcomes$breed)
+nodatesOutcomes$animal_type <- as.factor(nodatesOutcomes$animal_type)
+nodatesOutcomes$breed <- as.factor(nodatesOutcomes$breed)
+nodatesOutcomes$color <- as.factor(nodatesOutcomes$color)
+nodatesOutcomes$age <- as.factor(nodatesOutcomes$age)
+nodatesOutcomes$sex_upon_outcome <- as.factor(nodatesOutcomes$sex_upon_outcome)
+nodatesOutcomes$outcome_type <- as.factor(nodatesOutcomes$outcome_type)
+nrow(nodatesOutcomes)
+head(nodatesOutcomes)
+levels(nodatesOutcomes$sex_upon_outcome)
+
+summary(nodatesOutcomes$sex_upon_outcome)
 
 seq_len(5)
 sample(seq_len(5), 3)
-sample_size <- floor(0.8 * nrow(nodateOutcomes))
-training_index <- sample(seq_len(nrow(nodateOutcomes)), size = sample_size)
-train <- nodateOutcomes[training_index,]
-test <- nodateOutcomes[-training_index,]
+sample_size <- floor(0.8 * nrow(nodatesOutcomes))
+training_index <- sample(seq_len(nrow(nodatesOutcomes)), size = sample_size)
+train <- nodatesOutcomes[training_index,]
+test <- nodatesOutcomes[-training_index,]
 predictors <- c('animal_type','age','sex_upon_outcome')
 model <- C5.0(x = train[,predictors], y = train$outcome_type)
 summary(model)
-
+plot(model)

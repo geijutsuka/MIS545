@@ -1,7 +1,9 @@
 install.packages("C50")
+install.packages("tidyverse")
 library(C50)
+library(tidyverse)
 head(narrowedOutcomes)
-nodateOutcomes <- subset(narrowedOutcomes, select = c('animal_type','breed','color', 'age','sex_upon_outcome','outcome_type'))
+nodateOutcomes <- subset(narrowedOutcomes, select = c('animal_type','breed','color', 'age','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 
 nodateOutcomes$animal_type <- as.factor(nodateOutcomes$animal_type)
 nodateOutcomes$breed <- as.factor(nodateOutcomes$breed)
@@ -12,6 +14,8 @@ nodateOutcomes$outcome_type <- as.factor(nodateOutcomes$outcome_type)
 nrow(nodateOutcomes)
 head(nodateOutcomes)
 
+summary(nodateOutcomes$breed)
+
 seq_len(5)
 sample(seq_len(5), 3)
 sample_size <- floor(0.8 * nrow(nodateOutcomes))
@@ -19,5 +23,6 @@ training_index <- sample(seq_len(nrow(nodateOutcomes)), size = sample_size)
 train <- nodateOutcomes[training_index,]
 test <- nodateOutcomes[-training_index,]
 predictors <- c('animal_type','age','sex_upon_outcome')
-model <- C5.0(x = train[,predictors], y = train$nodateOutcomes)
+model <- C5.0(x = train[,predictors], y = train$outcome_type)
+summary(model)
 

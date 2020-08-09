@@ -23,8 +23,6 @@ head(narrowedOutcomes)
 narrowedOutcomes$age <- as.Date(as.character(narrowedOutcomes$datetime), format="%Y-%m-%d")-
                       as.Date(as.character(narrowedOutcomes$date_of_birth), format="%Y-%m-%d")
 
-colnames(narrowedOutcomes)
-
 narrowedOutcomes <- narrowedOutcomes[c(1,2,3,4,5,8,6,7)]
 
 narrowedOutcomes$datetime <- as.Date(as.character(narrowedOutcomes$datetime), format="%Y-%m-%d")

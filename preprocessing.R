@@ -35,6 +35,11 @@ filteredOutcomes$age <- as.Date(as.character(filteredOutcomes$datetime), format=
 filteredOutcomes$datetime <- as.Date(as.character(filteredOutcomes$datetime), format="%Y-%m-%d")
 filteredOutcomes$date_of_birth <- as.Date(as.character(filteredOutcomes$date_of_birth), format="%Y-%m-%d")
 head(filteredOutcomes)
+#Make the age numeric, get rid of negative ages, and divide the amount of days into years
+filteredOutcomes$age <- as.numeric(filteredOutcomes$age)
+min(filteredOutcomes$age)
+filteredOutcomes <- filteredOutcomes[filteredOutcomes$age > 0, ]
+filteredOutcomes$age <- filteredOutcomes$age/365
 
 #Reorganize the columns to move age and sex from the end
 filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,9,6,8,7)]

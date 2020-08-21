@@ -15,6 +15,8 @@ filteredOutcomes <- filteredOutcomes[filteredOutcomes$age_days > 0, ]
 #break into weeks:
 filteredOutcomes$age_weeks <- filteredOutcomes$age_days/7
 filteredOutcomes$age_weeks <- round(filteredOutcomes$age_weeks, digits = 0)
+filteredOutcomes$age_days <- NULL
+head(filteredOutcomes)
 
 #Reorganize the columns to move age and sex from the end and place outcome type last
 filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,9,6,8,7)]
@@ -37,3 +39,4 @@ filteredOutcomes$outcome_type[filteredOutcomes$outcome_type != "Adoption"] <- "n
 filteredOutcomes$outcome_type <- as.factor(filteredOutcomes$outcome_type)
 levels(filteredOutcomes$outcome_type)
 head(filteredOutcomes)
+

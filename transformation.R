@@ -8,7 +8,7 @@ filteredOutcomes$datetime <- as.Date(as.character(filteredOutcomes$datetime), fo
 filteredOutcomes$date_of_birth <- as.Date(as.character(filteredOutcomes$date_of_birth), format="%Y-%m-%d")
 head(filteredOutcomes)
 #Make the age numeric, get rid of negative ages, and divide the amount of days into years
-filteredOutcomes$age_days <- as.numeric(filteredOutcomes$age_days)
+filteredOutcomes$age_days <- as.integer(filteredOutcomes$age_days)
 min(filteredOutcomes$age_days)
 filteredOutcomes <- filteredOutcomes[filteredOutcomes$age_days > 0, ]
 #break into years: filteredOutcomes$age_years <- filteredOutcomes$age_days/365

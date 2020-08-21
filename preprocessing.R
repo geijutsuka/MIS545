@@ -25,24 +25,6 @@ summary(shelterOutcomes$sex_upon_outcome)
 #Make sure removed data is minimal (less than 50% of 78256)
 nrow(shelterOutcomes)
 
-#Remove the unneeded columns monthyear, animal_id, age_upon_outcome (age will be calculated later)
+#Remove the unneeded columns monthyear, animal_id, age_upon_outcome (age will be calculated later in transformation)
 filteredOutcomes <- subset(shelterOutcomes, select = -c(monthyear, animal_id, age_upon_outcome, outcome_subtype))
-head(filteredOutcomes)
-
-#Calculate the age from the difference of datetime of the outcome and DOB and format the dates
-filteredOutcomes$age <- as.Date(as.character(filteredOutcomes$datetime), format="%Y-%m-%d")-
-                        as.Date(as.character(filteredOutcomes$date_of_birth), format="%Y-%m-%d")
-filteredOutcomes$datetime <- as.Date(as.character(filteredOutcomes$datetime), format="%Y-%m-%d")
-filteredOutcomes$date_of_birth <- as.Date(as.character(filteredOutcomes$date_of_birth), format="%Y-%m-%d")
-head(filteredOutcomes)
-#Make the age numeric, get rid of negative ages, and divide the amount of days into years
-filteredOutcomes$age <- as.numeric(filteredOutcomes$age)
-min(filteredOutcomes$age)
-filteredOutcomes <- filteredOutcomes[filteredOutcomes$age > 0, ]
-filteredOutcomes$age <- filteredOutcomes$age/365
-filteredOutcomes$age <- round(filteredOutcomes$age, digits = 2)
-
-#Reorganize the columns to move age and sex from the end
-filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,9,6,8,7)]
-
 head(filteredOutcomes)

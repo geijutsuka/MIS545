@@ -40,6 +40,7 @@ filteredOutcomes$age <- as.numeric(filteredOutcomes$age)
 min(filteredOutcomes$age)
 filteredOutcomes <- filteredOutcomes[filteredOutcomes$age > 0, ]
 filteredOutcomes$age <- filteredOutcomes$age/365
+filteredOutcomes$age <- round(filteredOutcomes$age, digits = 2)
 
 #Reorganize the columns to move age and sex from the end
 filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,9,6,8,7)]

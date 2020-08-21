@@ -2,7 +2,7 @@ install.packages("caTools")
 install.packages("neuralnet")
 install.packages("tidyverse")
 
-simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
+simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_weeks','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 head(simplifiedOutcomes)
 str(simplifiedOutcomes)
 
@@ -57,6 +57,7 @@ f <- paste('Adopted ~', f)
 f <- as.formula(f)
 library(neuralnet)
 #nn <- neuralnet(f, train, hidden = c(3,3), stepmax = 1e7, linear.output = FALSE)
+##TRY THIS:
 nn <- neuralnet(f, train, hidden = c(2,2), stepmax = 1e6, linear.output = FALSE)
 predicted.nn.values <- compute(nn, test[1:4])
 print(head(predicted.nn.values$net.result))

@@ -6,7 +6,7 @@ library(tidyverse)
 library(pROC)
 
 head(filteredOutcomes)
-nodatesOutcomes <- subset(filteredOutcomes, select = c('animal_type','breed','color','age','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
+nodatesOutcomes <- subset(filteredOutcomes, select = c('animal_type','breed','color','age_weeks','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 head(nodatesOutcomes)
 
 nodatesOutcomes$sex_upon_outcome <- as.character(nodatesOutcomes$sex_upon_outcome)
@@ -14,7 +14,7 @@ nodatesOutcomes$sex_upon_outcome <- as.character(nodatesOutcomes$sex_upon_outcom
 nodatesOutcomes$animal_type <- as.factor(nodatesOutcomes$animal_type)
 nodatesOutcomes$breed <- as.factor(nodatesOutcomes$breed)
 nodatesOutcomes$color <- as.factor(nodatesOutcomes$color)
-nodatesOutcomes$age <- as.factor(nodatesOutcomes$age)
+nodatesOutcomes$age_weeks <- as.factor(nodatesOutcomes$age_weeks)
 nodatesOutcomes$name <- as.factor(nodatesOutcomes$name)
 nodatesOutcomes$sex_upon_outcome <- as.factor(nodatesOutcomes$sex_upon_outcome)
 nodatesOutcomes$outcome_type <- as.factor(nodatesOutcomes$outcome_type)
@@ -30,7 +30,7 @@ sample_size <- floor(0.8 * nrow(nodatesOutcomes))
 training_index <- sample(seq_len(nrow(nodatesOutcomes)), size = sample_size)
 train <- nodatesOutcomes[training_index,]
 test <- nodatesOutcomes[-training_index,]
-predictors <- c('animal_type','age','name','sex_upon_outcome')
+predictors <- c('animal_type','age_weeks','name','sex_upon_outcome')
 # predictors <- names(nodatesOutcomes)[-7]
 predictors
 model <- C5.0(x = train[, predictors], y = train$outcome_type)

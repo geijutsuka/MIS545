@@ -22,7 +22,7 @@ levels(simplifiedOutcomes$sex_upon_outcome)
 levels(simplifiedOutcomes$outcome_type)
 
 integerOutcomes <- simplifiedOutcomes
-#Make all the inputs numeric (age already numeric)
+#Make all the inputs numeric (age_years already integer)
 integerOutcomes$animal_type <- as.integer(integerOutcomes$animal_type)
 integerOutcomes$name <- as.integer(integerOutcomes$name)
 integerOutcomes$sex_upon_outcome <- as.integer(integerOutcomes$sex_upon_outcome)

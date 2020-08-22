@@ -14,7 +14,7 @@ nodatesOutcomes$sex_upon_outcome <- as.character(nodatesOutcomes$sex_upon_outcom
 nodatesOutcomes$animal_type <- as.factor(nodatesOutcomes$animal_type)
 nodatesOutcomes$breed <- as.factor(nodatesOutcomes$breed)
 nodatesOutcomes$color <- as.factor(nodatesOutcomes$color)
-#nodatesOutcomes$age_years <- as.integer(nodatesOutcomes$age_years)
+nodatesOutcomes$age_years <- as.integer(nodatesOutcomes$age_years)
 nodatesOutcomes$name <- as.factor(nodatesOutcomes$name)
 nodatesOutcomes$sex_upon_outcome <- as.factor(nodatesOutcomes$sex_upon_outcome)
 nodatesOutcomes$outcome_type <- as.factor(nodatesOutcomes$outcome_type)

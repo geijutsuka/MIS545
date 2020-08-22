@@ -16,6 +16,7 @@ filteredOutcomes$age_years <- filteredOutcomes$age_days/365
 #break into weeks: filteredOutcomes$age_weeks <- filteredOutcomes$age_days/7
 filteredOutcomes$age_years <- round(filteredOutcomes$age_years, digits = 0)
 filteredOutcomes$age_days <- NULL
+filteredOutcomes$age_years <- as.integer(filteredOutcomes$age_years)
 head(filteredOutcomes)
 
 #Reorganize the columns to move age and sex from the end and place outcome type last

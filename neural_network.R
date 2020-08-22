@@ -38,6 +38,7 @@ head(integerOutcomes)
 #Create vector of column max and min values
 maxs <- apply(integerOutcomes[,1:4], 2, max)
 mins <- apply(integerOutcomes[,1:4], 2, min)
+
 scaled.data <- as.data.frame(scale(integerOutcomes[,1:4], 
                                    center = mins,
                                    scale = maxs - mins))
@@ -58,7 +59,6 @@ f <- paste('Adopted ~', f)
 f <- as.formula(f)
 library(neuralnet)
 #nn <- neuralnet(f, train, hidden = c(3,3), stepmax = 1e7, linear.output = FALSE)
-##TRY THIS:
 nn <- neuralnet(f, train, hidden = c(2,2), stepmax = 1e6, linear.output = FALSE)
 predicted.nn.values <- compute(nn, test[1:4])
 print(head(predicted.nn.values$net.result))

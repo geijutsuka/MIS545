@@ -2,7 +2,8 @@ install.packages("caTools")
 install.packages("neuralnet")
 install.packages("tidyverse")
 
-simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_weeks','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
+#leaving out dates and breed due to too many variations
+simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_years','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 head(simplifiedOutcomes)
 str(simplifiedOutcomes)
 
@@ -20,33 +21,33 @@ levels(simplifiedOutcomes$name)
 levels(simplifiedOutcomes$sex_upon_outcome)
 levels(simplifiedOutcomes$outcome_type)
 
-numericOutcomes <- simplifiedOutcomes
+integerOutcomes <- simplifiedOutcomes
 #Make all the inputs numeric (age already numeric)
-numericOutcomes$animal_type <- as.numeric(numericOutcomes$animal_type)
-numericOutcomes$name <- as.numeric(numericOutcomes$name)
-numericOutcomes$sex_upon_outcome <- as.numeric(numericOutcomes$sex_upon_outcome)
+integerOutcomes$animal_type <- as.integer(integerOutcomes$animal_type)
+integerOutcomes$name <- as.integer(integerOutcomes$name)
+integerOutcomes$sex_upon_outcome <- as.integer(integerOutcomes$sex_upon_outcome)
 #Turn outcome type into a 0 or 1 (0 for notAdpoted, 1 for Adoption)
 library(plyr)
-numericOutcomes$outcome_type <- revalue(numericOutcomes$outcome_type, c("Adoption"=1))
-numericOutcomes$outcome_type <- revalue(numericOutcomes$outcome_type, c("notAdopted"=0))
-numericOutcomes$outcome_type <- as.character(numericOutcomes$outcome_type)
+integerOutcomes$outcome_type <- revalue(integerOutcomes$outcome_type, c("Adoption"=1))
+integerOutcomes$outcome_type <- revalue(integerOutcomes$outcome_type, c("notAdopted"=0))
+integerOutcomes$outcome_type <- as.character(integerOutcomes$outcome_type)
 
-summary(numericOutcomes)
-head(numericOutcomes)
+summary(integerOutcomes)
+head(integerOutcomes)
 
 #Create vector of column max and min values
-maxs <- apply(numericOutcomes[,1:4], 2, max)
-mins <- apply(numericOutcomes[,1:4], 2, min)
-scaled.data <- as.data.frame(scale(numericOutcomes[,1:4], 
+maxs <- apply(integerOutcomes[,1:4], 2, max)
+mins <- apply(integerOutcomes[,1:4], 2, min)
+scaled.data <- as.data.frame(scale(integerOutcomes[,1:4], 
                                    center = mins,
                                    scale = maxs - mins))
 print(head(scaled.data, 2))
-Adopted = as.numeric(numericOutcomes$outcome_type)
+Adopted = as.integer(integerOutcomes$outcome_type)
 Adopted
 data = cbind(Adopted, scaled.data)
 
 library(caTools)
-nrow(numericOutcomes)
+nrow(integerOutcomes)
 set.seed(101)
 split = sample.split(data$Adopted, SplitRatio = 0.70)
 train = subset(data, split == TRUE)

@@ -11,12 +11,11 @@ library(plyr)
 
 #check data:
 head(filteredOutcomes)
-simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
-simplifiedOutcomes$age <- as.factor(simplifiedOutcomes$age)
-head(simplifiedOutcomes)
+adoptionRecord <- subset(filteredOutcomes, select = c('animal_type','age_years','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
+head(adoptionRecord)
 
 #NOT WORKING:
-result <- apriori(simplifiedOutcomes, parameter = list(sup = 0.35, conf = 0.8, target = "rules"),
+result <- apriori(adoptionRecord, parameter = list(sup = 0.35, conf = 0.8, target = "rules"),
                   appearance = list(default = 'lhs', rhs = c('outcome_type=Adoption', 'outcome_type=notAdopted'))
 )
 result

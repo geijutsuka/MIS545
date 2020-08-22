@@ -11,10 +11,10 @@ head(filteredOutcomes)
 filteredOutcomes$age_days <- as.integer(filteredOutcomes$age_days)
 min(filteredOutcomes$age_days)
 filteredOutcomes <- filteredOutcomes[filteredOutcomes$age_days > 0, ]
-#break into years: filteredOutcomes$age_years <- filteredOutcomes$age_days/365
-#break into weeks:
-filteredOutcomes$age_weeks <- filteredOutcomes$age_days/7
-filteredOutcomes$age_weeks <- round(filteredOutcomes$age_weeks, digits = 0)
+#break into years:
+filteredOutcomes$age_years <- filteredOutcomes$age_days/365
+#break into weeks: filteredOutcomes$age_weeks <- filteredOutcomes$age_days/7
+filteredOutcomes$age_years <- round(filteredOutcomes$age_years, digits = 0)
 filteredOutcomes$age_days <- NULL
 head(filteredOutcomes)
 

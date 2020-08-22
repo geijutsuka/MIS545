@@ -24,51 +24,51 @@ levels(nodatesOutcomes$sex_upon_outcome)
 levels(nodatesOutcomes$outcome_type)
 summary(nodatesOutcomes$sex_upon_outcome)
 
-seq_len(5)
-sample(seq_len(5), 3)
-sample_size <- floor(0.8 * nrow(nodatesOutcomes))
-training_index <- sample(seq_len(nrow(nodatesOutcomes)), size = sample_size)
-train <- nodatesOutcomes[training_index,]
-test <- nodatesOutcomes[-training_index,]
-predictors <- c('animal_type','age_years','name','sex_upon_outcome')
-# predictors <- names(nodatesOutcomes)[-7]
-predictors
-model <- C5.0(x = train[, predictors], y = train$outcome_type)
-summary(model)
-plot(model)
-pred <- predict(model, newdata = test)
-evaluation <- cbind(test, pred)
-head(evaluation)
-evaluation$correct <- ifelse(evaluation$outcome_type == evaluation$pred, 1,0)
-head(evaluation)
-sum(evaluation$correct)/nrow(evaluation)
+dt_seq_len(5)
+dt_sample(dt_seq_len(5), 3)
+dt_sample_size <- floor(0.8 * nrow(nodatesOutcomes))
+dt_training_index <- sample(dt_seq_len(nrow(nodatesOutcomes)), size = dt_sample_size)
+dt_train <- nodatesOutcomes[dt_training_index,]
+dt_test <- nodatesOutcomes[-dt_training_index,]
+dt_predictors <- c('animal_type','age_years','name','sex_upon_outcome')
+# dt_predictors <- names(nodatesOutcomes)[-7]
+dt_predictors
+dt_model <- C5.0(x = dt_train[, dt_predictors], y = dt_train$outcome_type)
+summary(dt_model)
+plot(dt_model)
+pred <- predict(dt_model, newdata = dt_test)
+dt_evaluation <- cbind(dt_test, pred)
+head(dt_evaluation)
+dt_evaluation$correct <- ifelse(dt_evaluation$outcome_type == dt_evaluation$pred, 1,0)
+head(dt_evaluation)
+sum(dt_evaluation$correct)/nrow(dt_evaluation)
 #output: 0.7984138 (80% correct)
 
-table(evaluation$outcome_type, evaluation$pred)
+table(dt_evaluation$outcome_type, dt_evaluation$pred)
 
-TPR <- sum(evaluation$pred == 'Adoption' & evaluation$outcome_type == 'Adoption')/sum(evaluation$outcome_type == 'Adoption')
-TNR <- sum(evaluation$pred == 'notAdopted' & evaluation$outcome_type == 'notAdopted')/sum(evaluation$outcome_type == 'notAdopted')
-FPR <- 1 - TNR
-FNR <- 1 - TPR
-tree_precision <- sum(evaluation$outcome_type == 'Adoption' & evaluation$pred == 'Adoption')/sum(evaluation$pred == 'Adoption')
+dt_TPR <- sum(dt_evaluation$pred == 'Adoption' & dt_evaluation$outcome_type == 'Adoption')/sum(dt_evaluation$outcome_type == 'Adoption')
+dt_TNR <- sum(dt_evaluation$pred == 'notAdopted' & dt_evaluation$outcome_type == 'notAdopted')/sum(dt_evaluation$outcome_type == 'notAdopted')
+dt_FPR <- 1 - dt_TNR
+dt_FNR <- 1 - dt_TPR
+tree_precision <- sum(dt_evaluation$outcome_type == 'Adoption' & dt_evaluation$pred == 'Adoption')/sum(dt_evaluation$pred == 'Adoption')
 tree_precision
 # Output: 0.7745
-tree_recall <- sum(evaluation$outcome_type == 'Adoption' & evaluation$pred == 'Adoption')/sum(evaluation$outcome_type == 'Adoption')
+tree_recall <- sum(dt_evaluation$outcome_type == 'Adoption' & dt_evaluation$pred == 'Adoption')/sum(dt_evaluation$outcome_type == 'Adoption')
 tree_recall
 # Output: 0.9644
 Fscore <- 2 * tree_precision * tree_recall / (tree_precision + tree_recall)
 Fscore
 # Output: 0.8591
 
-reg <- glm(outcome_type ~ . , data = train, family = binomial())
+reg <- glm(outcome_type ~ . , data = dt_train, family = binomial())
 summary(reg)
 
-evaluation <- test
-evaluation$prob <- predict(reg, newdata = evaluation, type = "response")
+dt_evaluation <- dt_test
+dt_evaluation$prob <- predict(reg, newdata = dt_evaluation, type = "response")
 
 count_adoptions <- nrow(subset(nodatesOutcomes, nodatesOutcomes$outcome_type == "Adoption"))
-baseline <- count_adoptions / nrow(nodatesOutcomes)
-baseline
-g <- roc(evaluation$outcome_type ~ evaluation$prob, data = evaluation)
+dt_baseline <- count_adoptions / nrow(nodatesOutcomes)
+dt_baseline
+g <- roc(dt_evaluation$outcome_type ~ dt_evaluation$prob, data = dt_evaluation)
 plot(g)
 g

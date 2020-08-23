@@ -22,9 +22,6 @@ shelterOutcomes <- subset(shelterOutcomes, sex_upon_outcome != "Unknown")
 shelterOutcomes <- subset(shelterOutcomes, sex_upon_outcome != "NULL")
 summary(shelterOutcomes$sex_upon_outcome)
 
-#Make sure removed data is minimal (less than 50% of 78256)
-nrow(shelterOutcomes)
-
 #Remove the unneeded columns monthyear, animal_id, age_upon_outcome (age will be calculated later in transformation)
 filteredOutcomes <- subset(shelterOutcomes, select = -c(monthyear, animal_id, age_upon_outcome, outcome_subtype))
 head(filteredOutcomes)

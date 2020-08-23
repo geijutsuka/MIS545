@@ -6,12 +6,7 @@ install.packages("tidyverse")
 simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_years','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 head(simplifiedOutcomes)
 str(simplifiedOutcomes)
-
-simplifiedOutcomes$sex_upon_outcome <- as.character(simplifiedOutcomes$sex_upon_outcome)
-simplifiedOutcomes$sex_upon_outcome <- as.factor(simplifiedOutcomes$sex_upon_outcome)
-
 summary(simplifiedOutcomes)
-
 nrow(simplifiedOutcomes)
 
 library(tidyverse)
@@ -59,7 +54,7 @@ f <- paste('Adopted ~', f)
 f <- as.formula(f)
 library(neuralnet)
 #nn <- neuralnet(f, train, hidden = c(3,3), stepmax = 1e7, linear.output = FALSE)
-nn <- neuralnet(f, train, hidden = c(3), stepmax = 1e8, linear.output = FALSE)
+nn <- neuralnet(f, train, hidden = c(3), stepmax = 1e10, linear.output = FALSE)
 predicted.nn.values <- compute(nn, test[1:4])
 print(head(predicted.nn.values$net.result))
 predicted.nn.values$net.result <- sapply(predicted.nn.values$net.result, round, digits = 0)

@@ -1,6 +1,9 @@
 install.packages("caTools")
 install.packages("neuralnet")
-install.packages("tidyverse")
+install.packages("plyr")
+library(caTools)
+library(neuralnet)
+library(plyr)
 
 #leaving out dates and breed due to too many variations
 simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_years','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
@@ -8,8 +11,6 @@ head(simplifiedOutcomes)
 str(simplifiedOutcomes)
 summary(simplifiedOutcomes)
 nrow(simplifiedOutcomes)
-
-library(tidyverse)
 
 levels(simplifiedOutcomes$animal_type)
 levels(simplifiedOutcomes$name)
@@ -21,8 +22,8 @@ integerOutcomes <- simplifiedOutcomes
 integerOutcomes$animal_type <- as.integer(integerOutcomes$animal_type)
 integerOutcomes$name <- as.integer(integerOutcomes$name)
 integerOutcomes$sex_upon_outcome <- as.integer(integerOutcomes$sex_upon_outcome)
-#Turn outcome type into a 0 or 1 (0 for notAdpoted, 1 for Adoption)
-library(plyr)
+
+#Turn outcome type into a 0 or 1 (0 for notAdpoted, 1 for Adoption) plyr needed
 integerOutcomes$outcome_type <- revalue(integerOutcomes$outcome_type, c("Adoption"=1))
 integerOutcomes$outcome_type <- revalue(integerOutcomes$outcome_type, c("notAdopted"=0))
 integerOutcomes$outcome_type <- as.character(integerOutcomes$outcome_type)
@@ -42,7 +43,6 @@ Adopted = as.integer(integerOutcomes$outcome_type)
 Adopted
 data = cbind(Adopted, scaled.data)
 
-library(caTools)
 nrow(integerOutcomes)
 set.seed(101)
 split = sample.split(data$Adopted, SplitRatio = 0.70)
@@ -52,8 +52,7 @@ feats <- names(scaled.data)
 f <- paste(feats, collapse =' + ')
 f <- paste('Adopted ~', f)
 f <- as.formula(f)
-library(neuralnet)
-#nn <- neuralnet(f, train, hidden = c(3,3), stepmax = 1e7, linear.output = FALSE)
+
 nn <- neuralnet(f, train, hidden = c(3), stepmax = 1e10, linear.output = FALSE)
 predicted.nn.values <- compute(nn, test[1:4])
 print(head(predicted.nn.values$net.result))

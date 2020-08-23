@@ -40,6 +40,10 @@ filteredOutcomes$outcome_type[filteredOutcomes$outcome_type != "Adoption"] <- "n
 filteredOutcomes$outcome_type <- as.factor(filteredOutcomes$outcome_type)
 levels(filteredOutcomes$outcome_type)
 
+# Re-factorize the sex_upon_outcome
+filteredOutcomes$sex_upon_outcome <- as.character(filteredOutcomes$sex_upon_outcome)
+filteredOutcomes$sex_upon_outcome <- as.factor(filteredOutcomes$sex_upon_outcome)
+
 # Add age as categorical
 filteredOutcomes$age_range = cut(filteredOutcomes$age_years,c(0,1,5,10,15,20,30))
 filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,6,10,7,8,9)]

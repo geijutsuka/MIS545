@@ -39,5 +39,21 @@ filteredOutcomes$outcome_type[filteredOutcomes$outcome_type != "Adoption"] <- "n
 
 filteredOutcomes$outcome_type <- as.factor(filteredOutcomes$outcome_type)
 levels(filteredOutcomes$outcome_type)
+
+# Add age as categorical
+filteredOutcomes$age_range = cut(filteredOutcomes$age_years,c(0,1,5,10,15,20,30))
+filteredOutcomes <- filteredOutcomes[c(1,2,3,4,5,6,10,7,8,9)]
 head(filteredOutcomes)
 
+filteredOutcomes$age_range <- as.factor(filteredOutcomes$age_range)
+levels(filteredOutcomes$age_range) = c("1-5 years","1-5 years","5-10 years","10-15 years","15-20 years","20+ years")
+head(filteredOutcomes)
+filteredOutcomes$age_range <- as.character(filteredOutcomes$age_range)
+filteredOutcomes$age_range[is.na(filteredOutcomes$age_range)] <- "0-1 year"
+filteredOutcomes$age_range <- as.factor(filteredOutcomes$age_range)
+levels(filteredOutcomes$age_range)
+# Put the factor levels in order:
+filteredOutcomes$age_range <- factor(filteredOutcomes$age_range, levels = c("0-1 year","1-5 years","5-10 years","10-15 years","15-20 years","20+ years"))
+levels(filteredOutcomes$age_range)
+
+head(filteredOutcomes)

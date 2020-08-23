@@ -8,17 +8,9 @@ library(plyr)
 #leaving out dates and breed due to too many variations
 simplifiedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_years','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 head(simplifiedOutcomes)
-str(simplifiedOutcomes)
-summary(simplifiedOutcomes)
-nrow(simplifiedOutcomes)
 
-levels(simplifiedOutcomes$animal_type)
-levels(simplifiedOutcomes$name)
-levels(simplifiedOutcomes$sex_upon_outcome)
-levels(simplifiedOutcomes$outcome_type)
-
-integerOutcomes <- simplifiedOutcomes
 #Make all the inputs into integers (age_years already integer)
+integerOutcomes <- simplifiedOutcomes
 integerOutcomes$animal_type <- as.integer(integerOutcomes$animal_type)
 integerOutcomes$name <- as.integer(integerOutcomes$name)
 integerOutcomes$sex_upon_outcome <- as.integer(integerOutcomes$sex_upon_outcome)
@@ -27,7 +19,6 @@ integerOutcomes$sex_upon_outcome <- as.integer(integerOutcomes$sex_upon_outcome)
 integerOutcomes$outcome_type <- revalue(integerOutcomes$outcome_type, c("Adoption"=1))
 integerOutcomes$outcome_type <- revalue(integerOutcomes$outcome_type, c("notAdopted"=0))
 integerOutcomes$outcome_type <- as.character(integerOutcomes$outcome_type)
-
 summary(integerOutcomes)
 head(integerOutcomes)
 
@@ -43,7 +34,6 @@ Adopted = as.integer(integerOutcomes$outcome_type)
 Adopted
 data = cbind(Adopted, scaled.data)
 
-nrow(integerOutcomes)
 set.seed(101)
 split = sample.split(data$Adopted, SplitRatio = 0.70)
 train = subset(data, split == TRUE)

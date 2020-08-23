@@ -7,32 +7,26 @@ library(rpart)
 library(rpart.plot)
 library(pROC)
 
-head(filteredOutcomes)
-narrowedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_years','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
+narrowedOutcomes <- subset(filteredOutcomes, select = c('animal_type','age_range','name','sex_upon_outcome','outcome_type'), stringsAsFactors = TRUE)
 head(narrowedOutcomes)
 
-narrowedOutcomes$sex_upon_outcome <- as.character(narrowedOutcomes$sex_upon_outcome)
-
 narrowedOutcomes$animal_type <- as.factor(narrowedOutcomes$animal_type)
-narrowedOutcomes$breed <- as.factor(narrowedOutcomes$breed)
-narrowedOutcomes$color <- as.factor(narrowedOutcomes$color)
-#narrowedOutcomes$age_years <- as.integer(narrowedOutcomes$age_years)
 narrowedOutcomes$name <- as.factor(narrowedOutcomes$name)
 narrowedOutcomes$sex_upon_outcome <- as.factor(narrowedOutcomes$sex_upon_outcome)
 narrowedOutcomes$outcome_type <- as.factor(narrowedOutcomes$outcome_type)
-nrow(narrowedOutcomes)
-head(narrowedOutcomes)
+
 levels(narrowedOutcomes$sex_upon_outcome)
 levels(narrowedOutcomes$outcome_type)
-summary(narrowedOutcomes$sex_upon_outcome)
 
+# Sample and training data creation
 seq_len(5)
 sample(seq_len(5), 3)
 dt_sample_size <- floor(0.8 * nrow(narrowedOutcomes))
 dt_training_index <- sample(seq_len(nrow(narrowedOutcomes)), size = dt_sample_size)
 dt_train <- narrowedOutcomes[dt_training_index,]
 dt_test <- narrowedOutcomes[-dt_training_index,]
-dt_predictors <- c('animal_type','age_years','name','sex_upon_outcome')
+dt_predictors <- c('animal_type','age_range','name','sex_upon_outcome')
+
 # Plot default decision tree
 dt_model <- C5.0(x = dt_train[, dt_predictors], y = dt_train$outcome_type)
 summary(dt_model)

@@ -49,3 +49,15 @@ print(head(predicted.nn.values$net.result))
 predicted.nn.values$net.result <- sapply(predicted.nn.values$net.result, round, digits = 0)
 table(test$Adopted, predicted.nn.values$net.result)
 plot(nn)
+
+# Evaluate the effectiveness:
+#nn_predict <- predict(nn, newdata = test)
+#nn_evaluation <- cbind(test, nn_predict)
+nn_predict <- predicted.nn.values$net.result
+nn_evalu <- cbind(test, nn_predict)
+head(nn_evalu)
+nn_evalu$correct <- ifelse(nn_evalu$Adopted == nn_evalu$nn_predict, 1,0)
+head(nn_evalu)
+sum(nn_evalu$correct)/nrow(nn_evalu)
+# Output: 0.5155 (52% correct)
+

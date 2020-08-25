@@ -49,6 +49,7 @@ print(head(predicted.nn.values$net.result))
 predicted.nn.values$net.result <- sapply(predicted.nn.values$net.result, round, digits = 0)
 table(test$Adopted, predicted.nn.values$net.result)
 plot(nn)
+summary(nn)
 
 # Evaluate the effectiveness:
 nn_predict <- predicted.nn.values$net.result
@@ -60,6 +61,7 @@ sum(nn_evalu$correct)/nrow(nn_evalu)
 # Output: 0.5155 (52% correct)
 
 nn_TPR <- sum(nn_evalu$nn_predict == 1 & nn_evalu$Adopted == 1)/sum(nn_evalu$Adopted == 1)
+nn_TPR
 nn_TNR <- sum(nn_evalu$nn_predict == 0 & nn_evalu$Adopted == 0)/sum(nn_evalu$Adopted == 0)
 nn_FPR <- 1 - nn_TNR
 nn_FNR <- 1 - nn_TPR
@@ -73,15 +75,17 @@ Fscore <- 2 * nn_precision * nn_recall / (nn_precision + nn_recall)
 Fscore
 # Output: 0.2805
 
-reg <- glm(Adopted ~ . , data = nn_evalu, family = binomial())
-summary(reg)
+# NOT WORKING CORRECTLY:
+nn_reg <- glm(outcome_type ~ . , data = simplifiedOutcomes, family = binomial())
+summary(nn_reg)
 
-nn_evalu$prob <- predict(reg, newdata = nn_evalu, type = "response")
+nn_evalu$prob <- predict(nn_reg, newdata = test, type = "response")
 
 adoption_total <- nrow(subset(simplifiedOutcomes, simplifiedOutcomes$outcome_type == "Adoption"))
 adoption_total
 nn_baseline <- adoption_total / nrow(simplifiedOutcomes)
 nn_baseline
+# Output: 0.5785
 
 nn_rocplot <- roc(nn_evalu$Adopted ~ nn_evalu$prob, data = nn_evalu)
 plot(nn_rocplot)

@@ -71,8 +71,8 @@ nn_precision
 nn_recall <- sum(nn_evalu$Adopted == 1 & nn_evalu$nn_predict == 1)/sum(nn_evalu$Adopted == 1)
 nn_recall
 # Output: 0.1632
-Fscore <- 2 * nn_precision * nn_recall / (nn_precision + nn_recall)
-Fscore
+nn_Fscore <- 2 * nn_precision * nn_recall / (nn_precision + nn_recall)
+nn_Fscore
 # Output: 0.2805
 
 # NOT WORKING CORRECTLY:
